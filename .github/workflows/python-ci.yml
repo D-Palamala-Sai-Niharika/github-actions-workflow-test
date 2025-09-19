@@ -2,8 +2,7 @@ name: Python CI
 
 on:
     push: 
-        branches: 
-            - main
+        branches: ['main','develop']
     pull_request:
         branches: 
             - main
@@ -15,17 +14,19 @@ jobs:
         steps:
             # step 1 : checkout code from repository
             - name: Check Out Code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             # step 2 : setup python
             - name: Set Up Python
-              uses: actions/setup-python@v2
+              uses: actions/setup-python@v4
               with:
                 python-version: '3.8'
             
             # step 3 : install dependencies
             - name: Install Dependencies
-              run: python install -r requirements.txt
+              run: |
+                python -m pip install --upgrade pip
+                pip install -r requirements.txt
 
             # step 4 : run tests
             - name: Run test cases
